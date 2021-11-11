@@ -1,4 +1,4 @@
-package one.digitalinovation.cadperson.dto;
+package one.digitalinovation.cadperson.dto.response;
 
 import lombok.Builder;
 import lombok.Data;
