@@ -3,13 +3,16 @@ package one.digitalinovation.cadperson.service;
 import one.digitalinovation.cadperson.dto.request.PersonDTO;
 import one.digitalinovation.cadperson.dto.response.MessageResponseDTO;
 import one.digitalinovation.cadperson.entity.Person;
+import one.digitalinovation.cadperson.exception.PersonNotFoundException;
 import one.digitalinovation.cadperson.mapper.PersonMapper;
 import one.digitalinovation.cadperson.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.nio.file.ProviderNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,5 +49,16 @@ public class PersonService {
         return allPeople.stream()
                 .map(personMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    public PersonDTO findById(Long id) throws PersonNotFoundException {
+        Person person = personRepository.findById(id)
+                .orElseThrow(() -> new PersonNotFoundException(id));
+//        Optional<Person> optionalPerson = personRepository.findById(id);   #Foi substituido pelo metodo lambda#
+//        if (optionalPerson.isEmpty()) {
+//            throw new PersonNotFoundException(id);
+//        }
+        return personMapper.toDTO(person);
+
     }
 }
