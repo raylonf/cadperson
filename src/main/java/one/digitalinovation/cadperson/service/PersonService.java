@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.nio.file.ProviderNotFoundException;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,13 +50,22 @@ public class PersonService {
     }
 
     public PersonDTO findById(Long id) throws PersonNotFoundException {
-        Person person = personRepository.findById(id)
-                .orElseThrow(() -> new PersonNotFoundException(id));
+        Person person = verifyExists(id);
 //        Optional<Person> optionalPerson = personRepository.findById(id);   #Foi substituido pelo metodo lambda#
 //        if (optionalPerson.isEmpty()) {
 //            throw new PersonNotFoundException(id);
 //        }
         return personMapper.toDTO(person);
+    }
 
+    public void delete(Long id) throws PersonNotFoundException {
+        verifyExists(id);
+        personRepository.deleteById(id);
+    }
+
+    private Person verifyExists(Long id) throws PersonNotFoundException {
+        personRepository.findById(id)
+                .orElseThrow(() -> new PersonNotFoundException(id));
+        return null;
     }
 }
