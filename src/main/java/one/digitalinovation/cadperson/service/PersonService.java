@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Service
 public class PersonService {
 
-    private PersonRepository personRepository;
+    private final PersonRepository personRepository;
 
     private final PersonMapper personMapper = PersonMapper.INSTANCE;
 
@@ -35,7 +35,7 @@ public class PersonService {
 //                .build();
 
         Person savedPerson = personRepository.save(personToSave);
-        return createMessageResponse(savedPerson.getId(), "Created person with ID");
+        return createMessageResponse(savedPerson.getId(), "Created person with ID ");
     }
 
 
