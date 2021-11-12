@@ -30,8 +30,8 @@ public class PersonDTO {
     @Size(min = 2, max = 100)
     private String lastName;
 
-    @NotEmpty
     @CPF
+    @NotEmpty
     private String cpf;
 
     private String birthDate;
