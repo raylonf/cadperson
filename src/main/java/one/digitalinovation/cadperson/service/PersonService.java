@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Service
 public class PersonService {
 
-    private final PersonRepository personRepository;
+    private  PersonRepository personRepository;
 
     private final PersonMapper personMapper = PersonMapper.INSTANCE;
 
